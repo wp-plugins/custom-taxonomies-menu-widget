@@ -1,6 +1,6 @@
 === Custom Taxonomies Menu Widget ===
 
-Version: 1.0
+Version:
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
