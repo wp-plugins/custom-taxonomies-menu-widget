@@ -113,4 +113,4 @@ In the event of problems with the plugin, refer to the Resources listed above.
 == Changelog ==
 
 = 1.0 =
-* Public release 9 September 2010
+* Public release 9 October 2010
