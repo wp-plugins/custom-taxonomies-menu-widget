@@ -2,10 +2,10 @@
 /*
 Plugin Name: Custom Taxonomies Menu Widget
 Plugin URI: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
-Version: 1.0
+Version: 1.1
 Author: Ade Walker, Studiograsshopper
 Author URI: http://www.studiograsshopper.ch
-Description: Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via checkboxes to select which custom taxonomies and terms are displayed in the menu.
+Description: Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
 */
 
 /*  Copyright 2010  Ade WALKER  (email : info@studiograsshopper.ch) */
@@ -32,6 +32,9 @@ Feature:	means new user functionality has been added
 
 /* Version History
 
+	1.1		- Feature: Added option to hide Taxonomy title
+			- Feature: Added option to select whether or not to display terms as a hierarchy	
+
 	1.0		- Feature: First public release
 
 */
@@ -51,7 +54,7 @@ if (!defined('ABSPATH')) {
 /***** Set constants for plugin *****/
 define( 'SGR_CTMW_URL', WP_PLUGIN_URL.'/custom-taxonomies-menu-widget' );
 define( 'SGR_CTMW_DIR', WP_PLUGIN_DIR.'/custom-taxonomies-menu-widget' );
-define( 'SGR_CTMW_VER', '1.0' );
+define( 'SGR_CTMW_VER', '1.1' );
 define( 'SGR_CTMW_DOMAIN', 'sgr_custom_taxonomies_menu_widget' );
 define( 'SGR_CTMW_WP_VERSION_REQ', '2.9' );
 define( 'SGR_CTMW_FILE_NAME', 'custom-taxonomies-menu-widget/sgr-custom-taxonomies-menu-widget.php' );
@@ -125,7 +128,9 @@ class SGR_Widget_Custom_Taxonomies_Menu extends WP_Widget {
 			'orderby' => '',
 			'show_tax' => '',
 			'order' => '',
-			'show_count' => ''
+			'show_count' => '',
+			'show_tax_title' => '',
+			'show_hierarchical' => ''
 		) );
 		
 		echo $before_widget;
@@ -156,12 +161,13 @@ class SGR_Widget_Custom_Taxonomies_Menu extends WP_Widget {
   				
   				$args_list = array(
   					'taxonomy' => $custom_taxonomy->name, // Registered tax name
-  					'title_li' => $custom_taxonomy->labels->name, // Tax nice name
+  					'title_li' => $instance['show_tax_title'] ? $custom_taxonomy->labels->name : '', // Tax nice name
   					'include' => implode(',', (array)$instance['include_' . $custom_taxonomy->name]),
   					'orderby' => $instance['orderby'],
   					'show_count' => $instance['show_count'],
   					'order' => $instance['order'],
-  					'echo' => '0'
+  					'echo' => '0',
+					'hierarchical' => $instance['show_hierarchical'] ? true : false,
   				 	);
   					 
   				$list = wp_list_categories($args_list);
@@ -208,7 +214,9 @@ class SGR_Widget_Custom_Taxonomies_Menu extends WP_Widget {
 			'orderby' => '',
 			'show_tax' => '',
 			'order' => '',
-			'show_count' => ''
+			'show_count' => '',
+			'show_tax_title' => '',
+			'show_hierarchical' => ''
 		) );
 		
 		
@@ -273,8 +281,23 @@ class SGR_Widget_Custom_Taxonomies_Menu extends WP_Widget {
 				</label>
 				<input type="checkbox" id="<?php echo $this->get_field_id('show_count'); ?>" name="<?php echo $this->get_field_name('show_count'); ?>" value="true" <?php checked('true', $instance['show_count']); ?> />
 			</p>
+
+			<p>
+				<label for="<?php echo $this->get_field_id('show_tax_title'); ?>">
+					<?php _e('Show Taxonomy Title?', SGR_CTMW_DOMAIN); ?>
+				</label>
+				<input type="checkbox" id="<?php echo $this->get_field_id('show_tax_title'); ?>" name="<?php echo $this->get_field_name('show_tax_title'); ?>" value="true" <?php checked('true', $instance['show_tax_title']); ?> />
+			</p>
+
+			<p>
+				<label for="<?php echo $this->get_field_id('show_hierachical'); ?>">
+					<?php _e('Show Terms as hierarchy?', SGR_CTMW_DOMAIN); ?>
+				</label>
+				<input type="checkbox" id="<?php echo $this->get_field_id('show_hierarchical'); ?>" name="<?php echo $this->get_field_name('show_hierarchical'); ?>" value="true" <?php checked('true', $instance['show_hierarchical']); ?> />
+			</p>
 			
 		</div>
+		
 		<div class="custom-taxonomies-menu-lists-wrapper">
 		
 			<h4>Select taxonomies and terms</h4>
