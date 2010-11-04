@@ -121,7 +121,7 @@ In the event of problems with the plugin, refer to the Resources listed above.
 == Changelog ==
 
 =1.1=
-* Released 4 November 2010
+* Released 5 November 2010
 * Feature: Added option to hide Taxonomy title
 * Feature: Added option to select whether or not to display terms as a hierarchy
 
