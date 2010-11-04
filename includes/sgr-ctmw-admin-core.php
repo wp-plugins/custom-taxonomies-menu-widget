@@ -4,7 +4,7 @@
 *
 * @copyright Copyright 2010  Ade WALKER  (email : info@studiograsshopper.ch)
 * @package custom_taxonomies_menu_widget
-* @version 1.0
+* @version 1.1
 *
 * @info Core Admin Functions called by various add_filters and add_actions:
 * @info	- Internationalisation
