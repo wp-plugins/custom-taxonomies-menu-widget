@@ -7,7 +7,7 @@ Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Tags: custom taxonomies,taxonomy, menu, widget
 Requires at least: 2.9
 Tested up to: 3.0.1
-Stable tag: 1.0
+Stable tag: 1.1
 
 Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
 
