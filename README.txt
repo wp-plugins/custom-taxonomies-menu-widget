@@ -1,6 +1,6 @@
 === Custom Taxonomies Menu Widget ===
 
-Version:
+Version: 1.1
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
@@ -9,7 +9,7 @@ Requires at least: 2.9
 Tested up to: 3.0.1
 Stable tag: 1.0
 
-Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via checkboxes to select which custom taxonomies and terms are displayed in the menu.
+Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
 
 
 == Description==
@@ -22,6 +22,8 @@ Creates a simple menu of your custom taxonomies and their associated terms, idea
 * Select which custom taxonomies to display
 * Select which terms to display within the selected custom taxonomies
 * Options for choosing the order in which terms are displayed within the custom taxonomies (ID, name, count, etc)
+* Options for displaying or not the taxonomy name as a title
+* Options for displaying or not the list of terms as a hierarchy
 
 
 **Further information**
@@ -38,7 +40,7 @@ All support is handled at the [Studiograsshopper Forum](http://www.studiograssho
 == Installation ==
 
 
-**Installation**
+**New Installation**
 --------------------------------------------
 
 1. Download the latest version of the plugin to your computer.
@@ -51,6 +53,12 @@ Note for WordPress Multisite users:
 * Install the plugin in your */plugins/* directory (do not install in the */mu-plugins/* directory).
 * In order for this plugin to be visible to Site Admins, the plugin has to be activated for each blog by the Network Admin. Each Site Admin can then configure the plugin's Settings page in their Admin Settings.
 
+**Upgrading from a previous version**
+-------------------------------------
+Either use the automatic upgrader via the Dashboard>Plugins page or manually upgrade as follows:
+1. Download the latest version of the plugin to your computer.
+2. Extract and upload the folder *custom-taxonomies-menu-widget* to your */wp-content/plugins/* directory, overwriting the existing *custom-taxonomies-menu-widget* folder and its contents. Please ensure that you do not rename any folder or filenames in the process.
+3. Go to the plugin's Settings page, and configure any new settings introduced with the upgrade.
 
 
 **Instructions for use**
@@ -111,6 +119,11 @@ In the event of problems with the plugin, refer to the Resources listed above.
 
 
 == Changelog ==
+
+=1.1=
+* Released 4 November 2010
+* Feature: Added option to hide Taxonomy title
+* Feature: Added option to select whether or not to display terms as a hierarchy
 
 = 1.0 =
 * Public release 9 October 2010
