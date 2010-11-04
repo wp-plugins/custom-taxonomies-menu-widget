@@ -9,7 +9,7 @@
 * @info Core Admin Functions called by various add_filters and add_actions:
 * @info	- Internationalisation
 * @info	- Plugin row meta
-* @info	- WP Version check
+* @info	- WP Version check v
 *
 * @since 1.0
 */
