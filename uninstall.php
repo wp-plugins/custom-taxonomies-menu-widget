@@ -2,9 +2,9 @@
 /**
 * Uninstall file as per WP 2.7+
 *
-* @copyright Copyright 2010  Ade WALKER  (email : info@studiograsshopper.ch)
+* @copyright Copyright 2010-2011  Ade WALKER  (email : info@studiograsshopper.ch)
 * @package custom_taxonomies_menu_widget
-* @version 1.1
+* @version 1.1.1
 *
 *
 * @since 1.0

@@ -2,13 +2,13 @@
 /*
 Plugin Name: Custom Taxonomies Menu Widget
 Plugin URI: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
-Version: 1.1
+Version: 1.1.1
 Author: Ade Walker, Studiograsshopper
 Author URI: http://www.studiograsshopper.ch
 Description: Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
 */
 
-/*  Copyright 2010  Ade WALKER  (email : info@studiograsshopper.ch) */
+/*  Copyright 2010-2011  Ade WALKER  (email : info@studiograsshopper.ch) */
 
 /*	License information
 This program is free software; you can redistribute it and/or modify
@@ -32,6 +32,8 @@ Feature:	means new user functionality has been added
 
 /* Version History
 
+	1.1.1	- Bug fix: Removed debug code from sgr_ctmw_wp_version_check()
+	
 	1.1		- Feature: Added option to hide Taxonomy title
 			- Feature: Added option to select whether or not to display terms as a hierarchy	
 
@@ -54,7 +56,7 @@ if (!defined('ABSPATH')) {
 /***** Set constants for plugin *****/
 define( 'SGR_CTMW_URL', WP_PLUGIN_URL.'/custom-taxonomies-menu-widget' );
 define( 'SGR_CTMW_DIR', WP_PLUGIN_DIR.'/custom-taxonomies-menu-widget' );
-define( 'SGR_CTMW_VER', '1.1' );
+define( 'SGR_CTMW_VER', '1.1.1' );
 define( 'SGR_CTMW_DOMAIN', 'sgr_custom_taxonomies_menu_widget' );
 define( 'SGR_CTMW_WP_VERSION_REQ', '2.9' );
 define( 'SGR_CTMW_FILE_NAME', 'custom-taxonomies-menu-widget/sgr-custom-taxonomies-menu-widget.php' );
