@@ -1,12 +1,12 @@
 === Custom Taxonomies Menu Widget ===
 
-Version: 1.1
+Version: 1.1.1
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Tags: custom taxonomies,taxonomy, menu, widget
 Requires at least: 2.9
-Tested up to: 3.0.1
+Tested up to: 3.1
 Stable tag: 1.1
 
 Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
@@ -119,6 +119,10 @@ In the event of problems with the plugin, refer to the Resources listed above.
 
 
 == Changelog ==
+
+= 1.1.1 =
+* Released 1 March 2011
+* Bug fix: Removed debug code form sgr_ctmw_wp_version_check() function
 
 = 1.1 =
 * Released 4 November 2010
