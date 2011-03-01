@@ -2,9 +2,9 @@
 /**
 * Admin Core functions - all the stuff needed for backend only
 *
-* @copyright Copyright 2010  Ade WALKER  (email : info@studiograsshopper.ch)
+* @copyright Copyright 2010-2011  Ade WALKER  (email : info@studiograsshopper.ch)
 * @package custom_taxonomies_menu_widget
-* @version 1.1
+* @version 1.1.1
 *
 * @info Core Admin Functions called by various add_filters and add_actions:
 * @info	- Internationalisation
@@ -119,13 +119,14 @@ function sgr_ctmw_plugin_meta($links, $file) {
 * Hooked to 'after_action_row_$plugin' filter
 *
 * @since 1.0
+* @updated 1.1.1 
 */	
 function sgr_ctmw_wp_version_check() {
 	
 	$wp_valid = version_compare(get_bloginfo("version"), SGR_CTMW_WP_VERSION_REQ, '>=');
 	
 	$current_page = basename($_SERVER['PHP_SELF']);
-	print_r($current_page);
+	
 	// Check we are on the right screen and version is not valid
 	if( !$wp_valid && $current_page == "plugins.php" ) {
 		
