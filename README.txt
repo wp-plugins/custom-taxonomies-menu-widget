@@ -122,7 +122,7 @@ In the event of problems with the plugin, refer to the Resources listed above.
 
 == Changelog ==
 
-== 1.2 ==
+= 1.2 =
 * Released 28 December 2011
 * Bug fix: Now ignores taxonomies with no terms
 * Bug fix: Fixed missing internationalisation for strings in the widget form
