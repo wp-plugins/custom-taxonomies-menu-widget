@@ -2,7 +2,7 @@
 /*
 Plugin Name: Custom Taxonomies Menu Widget
 Plugin URI: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
-Version: 1.1.1
+Version: 1.2
 Author: Ade Walker, Studiograsshopper
 Author URI: http://www.studiograsshopper.ch
 Description: Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
@@ -26,12 +26,26 @@ http://www.gnu.org/licenses/gpl-2.0.html
 
 /* 	About Version History info:
 Bug fix:	means that something was broken and has been fixed
-Enhance:	means code has been improved either for better optimisation, code organisation, compatibility with wider use cases
-Feature:	means new user functionality has been added
+Enhance:	means code has been improved either for better optimisation, code organisation, compatibility with wider use cases, etc
+Feature:	means new functionality has been added
 */
 
 /* Version History
 
+	1.2		- Bug fix: Now ignores taxonomies with no terms
+			- Bug fix: Fixed missing internationalisation for strings in the widget form
+			- Bug fix: Enqueues admin CSS properly now
+			- Enhance: Upped minimum WP version requirement to 3.2 - upgrade!
+			- Enhance: Widget sub-class now uses PHP5 constructor
+			- Enhance: Widget control form made wider, less scrolling required for long taxonomy checklist
+			- Enhance: Added activation hook function for WP version check, deprecated SGR_CTMW_WP_VERSION_REQ constant
+			- Enhance: sgr_ctmw_wp_version_check() deprecated
+			- Enhance: sgr_ctmw_admin_notices() deprecated
+			- Enhance: Added SGR_CTMW_HOME for plugin's homepage url on studiograsshopper
+			- Enhance: Plugin files reorganised, sgr-ctmw-admin-core.php no longer used
+			- Feature: 'hide_empty' options added, to allow display of empty terms in the menu
+			- Feature: New terms are now automatically added to menu, and 'checked' in the widget form
+	
 	1.1.1	- Bug fix: Removed debug code from sgr_ctmw_wp_version_check()
 	
 	1.1		- Feature: Added option to hide Taxonomy title
@@ -47,320 +61,163 @@ Feature:	means new user functionality has been added
 
 
 /***** Prevent direct access to the plugin *****/
-if (!defined('ABSPATH')) {
-	exit(__( "Sorry, you are not allowed to access this page directly."));
+if ( ! defined( 'ABSPATH' ) ) {
+	exit( _( 'Sorry, you are not allowed to access this page directly.' ) );
 }
 
 
 
-/***** Set constants for plugin *****/
-define( 'SGR_CTMW_URL', WP_PLUGIN_URL.'/custom-taxonomies-menu-widget' );
-define( 'SGR_CTMW_DIR', WP_PLUGIN_DIR.'/custom-taxonomies-menu-widget' );
-define( 'SGR_CTMW_VER', '1.1.1' );
-define( 'SGR_CTMW_DOMAIN', 'sgr_custom_taxonomies_menu_widget' );
-define( 'SGR_CTMW_WP_VERSION_REQ', '2.9' );
-define( 'SGR_CTMW_FILE_NAME', 'custom-taxonomies-menu-widget/sgr-custom-taxonomies-menu-widget.php' );
+register_activation_hook( __FILE__, 'sgr_ctmw_activation' );
+/**
+ * This function runs on plugin activation.
+ * It checks to make sure that the minimum WP version is installed
+ *
+ * @uses network_admin_url(), as this fallbacks to admin_url() if no multisite
+ *
+ * @since 1.2
+ */
+function sgr_ctmw_activation() {
 
-
-
-/***** Set up variables needed throughout the plugin *****/
-
-// Internationalisation functionality
-$sgr_ctmw_text_loaded = false;
-
-
-
-/***** Include files *****/
-
-// Admin-only files
-if( is_admin() ) {
-	require_once( SGR_CTMW_DIR . '/includes/sgr-ctmw-admin-core.php');
-}
-
-
-/***** Add filters and actions ********************/
-
-if( is_admin() ) {
-	/* Admin - Adds additional links in main Plugins page */
-	// Function defined in sgr-ctmw-admin-core.php
-	add_filter( 'plugin_row_meta', 'sgr_ctmw_plugin_meta', 10, 2 );
+	$wp_version_required = '3.2';
 	
-	/* Admin - Adds WP version warning on main Plugins screen */
-	// Function defined in sgr-ctmw-admin-core.php
-	add_action('after_plugin_row_custom-taxonomies-menu-widget/sgr-custom-taxonomies-menu-widget.php', 'sgr_ctmw_wp_version_check');
-
-	/* Admin - Loads CSS for widget form */
-	// Function defined in sgr-ctmw-admin-core.php
-	add_action( 'admin_head', 'sgr_ctmw_loadcss_admin_head', 20 );
+	$wp_valid = version_compare( get_bloginfo( "version" ), $wp_version_required, '>=' );
 	
-	/* Admin - Adds WP version warning to Plugin and Widgets screens */
-	// Function defined in sgr-ctmw-admin-core.php
-	add_action('admin_notices', 'sgr_ctmw_admin_notices', 10 );
+	if ( ! $wp_valid ) {
+        
+        deactivate_plugins( plugin_basename( __FILE__ ) ); /** Deactivate ourself */
+		
+		wp_die( sprintf( __('Sorry, this version of the Custom Taxonomies Menu Widget plugin requires WordPress %s or greater. <br /><a href="%s">Go back to the Dashboard > Plugins screen</a>.' ), $wp_version_required, network_admin_url() . '/plugins.php' ) );
+	}
 }
 
 
+add_action( 'plugins_loaded', 'sgr_ctmw_init' );
+/**
+ * Initialise plugin
+ *
+ * - Defines constants
+ * - Sets internationalisation global variable
+ * - Loads plugin files
+ * - Initialises all action/filter hooks needed
+ *
+ * Note: hooked to 'plugins_loaded' because admin_init or init runs too late
+ * for widgets_init, which is needed by the register_widget() function
+ *
+ * @since 1.2
+ */
+function sgr_ctmw_init() {
 
-/***** The widget *****/
-
-add_action('widgets_init', 'register_sgr_custom_taxonomies_menu_widget');
-function register_sgr_custom_taxonomies_menu_widget() {
-	
-	register_widget('SGR_Widget_Custom_Taxonomies_Menu');
-}
-
-
-
-class SGR_Widget_Custom_Taxonomies_Menu extends WP_Widget {
-
-	function SGR_Widget_Custom_Taxonomies_Menu() {
-		$widget_ops = array(
-			'classname' => 'sgr-custom-taxonomies-menu',
-			'description' => __('Display navigation for your custom taxonomies', SGR_CTMW_DOMAIN)
-			);
-		$this->WP_Widget('sgr-custom-taxonomies-menu', __('Custom Taxonomies Menu Widget', SGR_CTMW_DOMAIN), $widget_ops);
-	}
-
-
-	function widget($args, $instance) {
-		extract($args);
-		
-		$instance = wp_parse_args( (array)$instance, array(
-			'title' => '',
-			'include' => array(),
-			'orderby' => '',
-			'show_tax' => '',
-			'order' => '',
-			'show_count' => '',
-			'show_tax_title' => '',
-			'show_hierarchical' => ''
-		) );
-		
-		echo $before_widget;
-		
-		if ($instance['title']) echo $before_title . apply_filters('widget_title', $instance['title']) . $after_title;
-			
-		// Get all custom taxonomies
-		$args=array(
-  			'public'   => true,
-  			'_builtin' => false
-			);
-			
-		$output = 'objects'; // or names
-		$operator = 'and'; // 'and' or 'or'
-		$custom_taxonomies = get_taxonomies( $args, $output, $operator ); 
-		
-		// If no custom taxonomies exist...
-		if( !$custom_taxonomies ) {
-			echo "\n" . '<p>' . __('There are no registered custom taxonomies.', SGR_CTMW_DOMAIN) . '</p>' . "\n";
-  			echo $after_widget;
-  			return;
-  		}
-  			
-  		// Display the taxonomies and terms
-  		foreach ($custom_taxonomies as $custom_taxonomy ) {
-  				
-  			if( isset( $instance['show_tax_' . $custom_taxonomy->name]) && $instance['show_tax_' . $custom_taxonomy->name] == "true") {
-  				
-  				$args_list = array(
-  					'taxonomy' => $custom_taxonomy->name, // Registered tax name
-  					'title_li' => $instance['show_tax_title'] ? $custom_taxonomy->labels->name : '', // Tax nice name
-  					'include' => implode(',', (array)$instance['include_' . $custom_taxonomy->name]),
-  					'orderby' => $instance['orderby'],
-  					'show_count' => $instance['show_count'],
-  					'order' => $instance['order'],
-  					'echo' => '0',
-					'hierarchical' => $instance['show_hierarchical'] ? true : false,
-  				 	);
-  					 
-  				$list = wp_list_categories($args_list);
-  				
-  				echo "\n" . '<ul>' . "\n";
-  				
-  				echo $list;
-  				  				
-  				echo "\n" . '</ul>' . "\n";
-  			}
-   		}     
-				
-		echo $after_widget;
-	}
+	// Define constants
+	define( 'SGR_CTMW_URL',				plugins_url( 'custom-taxonomies-menu-widget' ) );
+	define( 'SGR_CTMW_DIR',				plugin_dir_path( __FILE__ ) );
+	define( 'SGR_CTMW_VER',				'1.2' );
+	define( 'SGR_CTMW_DOMAIN',			'sgr-custom-taxonomies-menu-widget' );
+	define( 'SGR_CTMW_FILE_NAME',		'custom-taxonomies-menu-widget/sgr-custom-taxonomies-menu-widget.php' );
+	define( 'SGR_CTMW_HOME',			'http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/' );
 
 
-	function update($new_instance, $old_instance) {
-		return $new_instance;
-	}
+	// Internationalisation functionality
+	global $sgr_ctmw_text_loaded;
+	$sgr_ctmw_text_loaded = false;
 
 
-	function form($instance) { 
-		
-		// Get all custom taxonomies - shame we have to do this again
-		$args=array(
-  			'public'   => true,
-  			'_builtin' => false
-			);
-			
-		$output = 'objects'; // or names
-		$operator = 'and'; // 'and' or 'or'
-		$custom_taxonomies = get_taxonomies( $args, $output, $operator );
-		
-		if( !$custom_taxonomies ) {
-			echo __('There are no custom taxonomies registered. This widget only works with registered custom taxonomies.', SGR_CTMW_DOMAIN);
-			return;	
-		}
-		
-		
-		// Old
-		$instance = wp_parse_args( (array)$instance, array(
-			'title' => '',
-			'include' => array(),
-			'orderby' => '',
-			'show_tax' => '',
-			'order' => '',
-			'show_count' => '',
-			'show_tax_title' => '',
-			'show_hierarchical' => ''
-		) );
-		
-		
-		// Empty fallback (default)
-		// The idea here is that all checkboxes will be pre-checked on first use of widget
-		// Note: if all terms for a taxonomy are unchecked by user, the following will automatically re-check all terms
-		// Therefore, to hide a taxonomy, uncheck the taxonomy, not the taxonomy's terms. Make sense?
-		foreach( $custom_taxonomies as $custom_taxonomy ) {
-		
-			// Populate the 'include' terms checkboxes
-			if( empty( $instance['include_' . $custom_taxonomy->name] ) ) {
+	// Include files
+	require_once( SGR_CTMW_DIR . '/includes/sgr-ctmw-class-widget.php' );
 
-				$args = array('hide_empty' => 0 );
-				$terms = get_terms($custom_taxonomy->name, $args);
-				
-				foreach($terms as $term) {
-					$instance['include_' . $custom_taxonomy->name][] = $term->term_id;
-				}
-			}
-			// Populate the 'show_tax' taxonomy checkboxes
-			if( empty( $instance['show_tax_' . $custom_taxonomy->name] ) ) {
-				$instance['show_tax_' . $custom_taxonomy->name][] = "true";
-			}
-		}
-		?>
-		
-		<div class="custom-taxonomies-menu-top">
-			<p><?php _e('This widget produces a custom taxonomy navigation menu, ideal for use in sidebars.', SGR_CTMW_DOMAIN); ?></p>
-			<p><a href="http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/"><?php _e('Plugin homepage', SGR_CTMW_DOMAIN); ?></a> | 
-			<a href="http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/faq/"><?php _e('FAQ', SGR_CTMW_DOMAIN); ?></a> | 
-			version <?php echo SGR_CTMW_VER; ?></p>
-		</div>
-		
-		<div class="custom-taxonomies-menu-options">
-			<h4>Configuration options</h4>
-			<p>
-				<label for="<?php echo $this->get_field_id('title'); ?>">
-				<?php _e('Menu Title', SGR_CTMW_DOMAIN); ?>:
-				</label>
-				<input type="text" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" style="width:95%;" />
-			</p>
-		
-			<p><?php _e('Choose the order by which you would like to display the terms within each taxonomy', SGR_CTMW_DOMAIN); ?>:</p>
-		
-			<p><select name="<?php echo $this->get_field_name('orderby'); ?>">
-				<option style="padding-right:10px;" value="name" <?php selected('name', $instance['orderby']); ?>>Name</option>
-				<option style="padding-right:10px;" value="ID" <?php selected('id', $instance['orderby']); ?>>ID</option>
-				<option style="padding-right:10px;" value="slug" <?php selected('slug', $instance['orderby']); ?>>Slug</option>
-				<option style="padding-right:10px;" value="count" <?php selected('count', $instance['orderby']); ?>>Count</option>
-				<option style="padding-right:10px;" value="term_group" <?php selected('term_group', $instance['orderby']); ?>>Term Group</option>
-			</select></p>
-		
-			<p><?php _e('Choose whether to display taxonomy terms in ASCending order(default) or DESCending order', SGR_CTMW_DOMAIN); ?>:</p>
-			<p><select name="<?php echo $this->get_field_name('order'); ?>">
-				<option style="padding-right:10px;" value="asc" <?php selected('ASC', $instance['order']); ?>>ASC (default)</option>
-				<option style="padding-right:10px;" value="desc" <?php selected('DESC', $instance['order']); ?>>DESC</option>
-			</select></p>
-		
-			<p>
-				<label for="<?php echo $this->get_field_id('show_count'); ?>">
-					<?php _e('Show post count?', SGR_CTMW_DOMAIN); ?>
-				</label>
-				<input type="checkbox" id="<?php echo $this->get_field_id('show_count'); ?>" name="<?php echo $this->get_field_name('show_count'); ?>" value="true" <?php checked('true', $instance['show_count']); ?> />
-			</p>
 
-			<p>
-				<label for="<?php echo $this->get_field_id('show_tax_title'); ?>">
-					<?php _e('Show Taxonomy Title?', SGR_CTMW_DOMAIN); ?>
-				</label>
-				<input type="checkbox" id="<?php echo $this->get_field_id('show_tax_title'); ?>" name="<?php echo $this->get_field_name('show_tax_title'); ?>" value="true" <?php checked('true', $instance['show_tax_title']); ?> />
-			</p>
+	// Action hooks and filters
+	if( is_admin() ) {
+		// Admin - Adds additional links in main Plugins page
+		add_filter( 'plugin_row_meta', 'sgr_ctmw_plugin_meta', 10, 2 );
 
-			<p>
-				<label for="<?php echo $this->get_field_id('show_hierachical'); ?>">
-					<?php _e('Show Terms as hierarchy?', SGR_CTMW_DOMAIN); ?>
-				</label>
-				<input type="checkbox" id="<?php echo $this->get_field_id('show_hierarchical'); ?>" name="<?php echo $this->get_field_name('show_hierarchical'); ?>" value="true" <?php checked('true', $instance['show_hierarchical']); ?> />
-			</p>
-			
-		</div>
-		
-		<div class="custom-taxonomies-menu-lists-wrapper">
-		
-			<h4>Select taxonomies and terms</h4>
-
-			<p><?php _e('Use the checklist(s) below to choose which custom taxonomies and terms you want to include in your Navigation Menu. To hide a taxonomy, uncheck the taxonomy name.', SGR_CTMW_DOMAIN); ?></p>
-		
-			<?php
-			// Produce a checklist of terms for each custom taxonomy
-			foreach ($custom_taxonomies as $custom_taxonomy ) :
-			
-				$checkboxes = '';
-			
-				$checkboxes = sgr_taxonomy_checklist($this->get_field_name('include_' . $custom_taxonomy->name), $custom_taxonomy, $instance['include_' . $custom_taxonomy->name]);
-				?>
-			
-				<div class="custom-taxonomies-menu-list">
-					<p>
-						<input type="checkbox" id="<?php echo $this->get_field_id('show_tax_' . $custom_taxonomy->name); ?>" name="<?php echo $this->get_field_name('show_tax_' . $custom_taxonomy->name); ?>" value="true" <?php checked('true', $instance['show_tax_'.$custom_taxonomy->name]); ?> />
-						<label for="<?php echo $this->get_field_id('show_tax_' . $custom_taxonomy->name); ?>" class="sgr-ctmw-tax-label">
-							<?php echo $custom_taxonomy->label; ?>
-						</label>
-					</p>
-				
-					<ul class="custom-taxonomies-menu-checklist">
-						<?php echo $checkboxes; ?>
-					</ul>
-				</div>
-			
-				<?php
-			endforeach; ?>
-		
-		</div>
-		
-	<?php 
+		// Admin - Loads CSS for widget form
+		add_action( 'admin_enqueue_scripts', 'sgr_ctmw_loadcss_admin_head', 100 );
 	}
 }
 
 
 /**
-* Creates a taxonomy checklist based on wp_terms_checklist()
-*
-* Output buffering is used so that we can run a string replace after the checklist is created
-*
-* @param $name - string
-* @param $custom_taxonomy - array - Array object for a custom taxonomy
-* @param $selected - array - Selected terms within the taxonomy
-*
-* @since 1.0
-*/
-function sgr_taxonomy_checklist($name = '', $custom_taxonomy, $selected = array()) {
-	$name = esc_attr( $name );
-
-	$checkboxes = '';
-
-	ob_start();
-		
-	$terms_args = array ('taxonomy' => $custom_taxonomy->name, 'selected_cats' => $selected, 'checked_ontop' => false);
-		
-	wp_terms_checklist(0, $terms_args);
+ * Function to load textdomain for Internationalisation functionality
+ *
+ * Loads textdomain if $sgr_ctmw_text_loaded is false,
+ * called by SGR_Widget_Custom_Taxonomies_Menu::form()
+ *
+ * Note: .mo file should be named as per the text domain, ie sgr-custom-taxonomies-menu-widget-xx_XX.mo
+ * and placed in the CTMW plugin's languages folder, where xx_XX is the language code, eg fr_FR for French etc.
+ *
+ * @since 1.0
+ *
+ * @uses load_plugin_textdomain()
+ * @global $sgr_ctmw_text_loaded bool defined in sgr-custom-taxonomies-menu-widget.php
+ * @return null if $sgr_ctmw_text_loaded is true, or loads textdomain
+ */
+function sgr_ctmw_load_textdomain() {
 	
-	$checkboxes .= str_replace('name="tax_input['.$custom_taxonomy->name.'][]"', 'name="'.$name.'[]"', ob_get_clean());
-			
-	return $checkboxes;
+	global $sgr_ctmw_text_loaded;
+   	
+	// If textdomain is already loaded, do nothing
+	if( $sgr_ctmw_text_loaded ) {
+   		return;
+   	}
+	
+	// Textdomain isn't already loaded, let's load it
+   	load_plugin_textdomain( SGR_CTMW_DOMAIN, false, dirname( plugin_basename(__FILE__) ) . '/languages' );
+   	
+	// Change variable to prevent loading textdomain again
+	$sgr_ctmw_text_loaded = true;
+}
+
+
+/**
+ * Function to load Admin CSS
+ *
+ * Hooked to 'admin_enqueue_scripts' - only loads on widgets.php
+ *
+ * @since 1.0
+ *
+ * @global $pagenow - admin page name
+ */
+function sgr_ctmw_loadcss_admin_head() {
+
+	global $pagenow;
+	
+	if( $pagenow == 'widgets.php' ) {
+	
+		//wp_enqueue_style( $handle, $src, $deps, $ver, $media );
+		wp_enqueue_style( 'ctmw-admin', SGR_CTMW_URL . '/includes/sgr-ctmw-ui-admin.css', array(), SGR_CTMW_VER );
+	}
+}
+
+
+/**
+ * Display Plugin Meta Links in main Plugin page in Dashboard
+ *
+ * Adds additional meta links in the plugin's info section in main Plugins Settings page
+ *
+ * Hooked to 'plugin_row_meta filter' so only works for WP 2.8+
+ *
+ * @since 1.0
+ *
+ * @param array $links Default links for each plugin row
+ * @param string $file plugins.php filehook
+ *
+ * @return array $links Array of customised links shown in plugin row after activation
+ */
+function sgr_ctmw_plugin_meta($links, $file) {
+ 
+	// Check we're only adding links to this plugin
+	if( $file == SGR_CTMW_FILE_NAME ) {
+	
+		// Create CTMW links
+		$config_link = sprintf( '<a href="%s" target="_blank">%s</a>', SGR_CTMW_HOME, __( 'Configuration Guide', SGR_CTMW_DOMAIN ) );
+		
+		$faq_link = sprintf( '<a href="%sfaq/" target="_blank">%s</a>', SGR_CTMW_HOME, __( 'FAQ', SGR_CTMW_DOMAIN ) );
+		
+		return array_merge(
+			$links,
+			array( $config_link, $faq_link )
+		);
+	}
+ 
+	return $links;
 }
