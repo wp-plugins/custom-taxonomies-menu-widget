@@ -1,11 +1,11 @@
 === Custom Taxonomies Menu Widget ===
 
-Version: 1.1.1
+Version: 1.2
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Tags: custom taxonomies,taxonomy, menu, widget
-Requires at least: 2.9
+Requires at least: 3.2
 Tested up to: 3.3
 Stable tag: 1.1.1
 
@@ -21,9 +21,11 @@ Creates a simple menu of your custom taxonomies and their associated terms, idea
 
 * Select which custom taxonomies to display
 * Select which terms to display within the selected custom taxonomies
-* Options for choosing the order in which terms are displayed within the custom taxonomies (ID, name, count, etc)
-* Options for displaying or not the taxonomy name as a title
-* Options for displaying or not the list of terms as a hierarchy
+* Choose the order in which terms are displayed within the custom taxonomies (ID, name, count, etc)
+* Choose whether to display the taxonomy name as a title
+* Choose whether to display the list of terms as a hierarchy
+* Choose whether to hide terms with no posts
+* NEW - New terms are now automatically added to the menu
 
 
 **Further information**
@@ -42,7 +44,7 @@ All support is handled at the [Studiograsshopper Forum](http://www.studiograssho
 
 **New Installation**
 --------------------------------------------
-
+Either use the automatic installer via the Dashboard>Plugins page or manually install as follows:
 1. Download the latest version of the plugin to your computer.
 2. Extract and upload the folder *custom-taxonomies-menu-widget* to your */wp-content/plugins/* directory. Please ensure that you do not rename any folder or filenames in the process.
 3. Activate the plugin in your Dashboard via the "Plugins" menu item.
@@ -119,6 +121,22 @@ In the event of problems with the plugin, refer to the Resources listed above.
 
 
 == Changelog ==
+
+== 1.2 ==
+* Released 28 December 2011
+* Bug fix: Now ignores taxonomies with no terms
+* Bug fix: Fixed missing internationalisation for strings in the widget form
+* Bug fix: Enqueues admin CSS properly now
+* Enhance: Upped minimum WP version requirement to 3.2 - upgrade!
+* Enhance: Widget sub-class now uses PHP5 constructor
+* Enhance: Widget control form made wider, less scrolling required for long taxonomy checklist
+* Enhance: Added activation hook function for WP version check, deprecated SGR_CTMW_WP_VERSION_REQ constant
+* Enhance: sgr_ctmw_wp_version_check() deprecated
+* Enhance: sgr_ctmw_admin_notices() deprecated
+* Enhance: Added SGR_CTMW_HOME for plugin's homepage url on studiograsshopper
+* Enhance: Plugin files reorganised, sgr-ctmw-admin-core.php no longer used
+* Feature: 'hide_empty' options added, to allow display of empty terms in the menu
+* Feature: New terms are now automatically added to menu, and 'checked' in the widget form
 
 = 1.1.1 =
 * Released 1 March 2011
