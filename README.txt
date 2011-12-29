@@ -1,6 +1,6 @@
 === Custom Taxonomies Menu Widget ===
 
-Version: 1.2
+Version: 1.2.1
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
@@ -121,6 +121,10 @@ In the event of problems with the plugin, refer to the Resources listed above.
 
 
 == Changelog ==
+
+= 1.2.1 =
+* Released 29 December 2011
+* Bug fix: Fixed PHP error on upgrade with $known_terms returning NULL
 
 = 1.2 =
 * Released 28 December 2011

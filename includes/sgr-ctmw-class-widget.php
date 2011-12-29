@@ -5,7 +5,7 @@
  * @author Ade WALKER  (email : info@studiograsshopper.ch)
  * @copyright Copyright 2010-2011
  * @package custom_taxonomies_menu_widget
- * @version 1.2
+ * @version 1.2.1
  *
  * Defines widget class and registers widget
  * Any helper functions outside the class, but used by the class, are also defined here
@@ -151,6 +151,10 @@ class SGR_Widget_Custom_Taxonomies_Menu extends WP_Widget {
   				
   				// Get all terms (checked and unchecked) that were present in the widget form when the widget form was last saved
   				$known_terms = $instance['known_' . $custom_taxonomy->name];
+  				
+  				// Deal with upgraded plugin situation, and widget form not yet saved.
+  				// Prevents PHP error
+  				if( $known_terms === NULL ) $known_terms = array();
   				
   				// Loop through the terms and look for newly added ones
   				foreach ( $current_terms as $current_term ) {
