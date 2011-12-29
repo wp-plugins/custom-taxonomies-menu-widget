@@ -150,11 +150,11 @@ class SGR_Widget_Custom_Taxonomies_Menu extends WP_Widget {
 				$current_terms = get_terms( $custom_taxonomy->name, array( 'hide_empty' => 0 ) );
   				
   				// Get all terms (checked and unchecked) that were present in the widget form when the widget form was last saved
-  				$known_terms = $instance['known_' . $custom_taxonomy->name];
+  				$known_terms = isset( $instance['known_' . $custom_taxonomy->name] );
   				
   				// Deal with upgraded plugin situation, and widget form not yet saved.
   				// Prevents PHP error
-  				if( $known_terms === NULL ) $known_terms = array();
+  				if( $known_terms === false ) $known_terms = array();
   				
   				// Loop through the terms and look for newly added ones
   				foreach ( $current_terms as $current_term ) {
