@@ -6,7 +6,7 @@ Author page: http://www.studiograsshopper.ch
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Tags: custom taxonomies,taxonomy, menu, widget
 Requires at least: 3.2
-Tested up to: 3.3
+Tested up to: 3.5.1
 Stable tag: 1.2.2
 
 Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
@@ -36,7 +36,7 @@ Comprehensive information on installing, configuring and using the plugin can be
 * [FAQ](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/faq/)
 
 
-All support is handled at the [Studiograsshopper Forum](http://www.studiograsshopper.ch/forum/). I do not have time to monitor the wordpress.org forums, therefore please post any questions on my site's forum.
+All support is handled at the [plugin's WordPress.org Support Forum](http://wordpress.org/support/plugin/custom-taxonomies-menu-widget).
 
 
 == Installation ==
@@ -101,7 +101,7 @@ This plugin is provided free of charge without warranty.  In the event you exper
 * [Configuration Guide](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/)
 * [FAQ](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/faq/)
 
-If, having referred to the above resources, you still need assistance, visit the support page at http://www.studiograsshopper.ch/forum/.  Support is provided in my free time but every effort will be made to respond to support queries as quickly as possible. I do not have time to monitor the wordpress.org forums, therefore please post any questions on my site's forum.
+If, having referred to the above resources, you still need assistance, you can post a question on the [plugin's WordPress.org Support Forum](http://wordpress.org/support/plugin/custom-taxonomies-menu-widget).  Support is provided in my free time but every effort will be made to respond to support queries as quickly as possible.
 
 Thanks for downloading the plugin.  Enjoy!
 
@@ -123,6 +123,7 @@ In the event of problems with the plugin, refer to the Resources listed above.
 == Changelog ==
 
 = 1.2.2 =
+* Readme.txt updated 23 March 2013
 * Released 1 January 2012
 * Bug fix: Fixed PHP data type error
 
