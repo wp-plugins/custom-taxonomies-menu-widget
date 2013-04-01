@@ -72,7 +72,7 @@ Support is provided in my free time but every effort will be made to respond to 
 
 **Can I Donate?**
 -----------------
-Yes, of course you can! You can find a link in the plugin's Settings page. Donations are welcome and much appreciated. Thanks!
+Yes, of course you can! You can find a link [here](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/). Thanks!. Thanks!
 
 
 **License and Disclaimer**
@@ -104,7 +104,7 @@ Go to your Dashboard > Appearance > Widgets page and drag the Custom Taxonomies 
 == Changelog ==
 
 = 1.2.2 =
-* Readme.txt updated 23 March 2013
+* Readme.txt updated 1 April 2013
 * Released 1 January 2012
 * Bug fix: Fixed PHP data type error
 
