@@ -4,6 +4,7 @@ Version: 1.2.2
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
+Donate link: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Tags: custom taxonomies,taxonomy, menu, widget
 Requires at least: 3.2
 Tested up to: 3.5.1
@@ -30,88 +31,68 @@ Creates a simple menu of your custom taxonomies and their associated terms, idea
 
 **Further information**
 -----------------------
-Comprehensive information on installing, configuring and using the plugin can be found [here](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/)
+Comprehensive information on configuring and using the plugin can be found here:
 
-* [Configuration Guide](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/)
+* [Configuration Guide](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/configuration/)
 * [FAQ](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/faq/)
 
-
-All support is handled at the [plugin's WordPress.org Support Forum](http://wordpress.org/support/plugin/custom-taxonomies-menu-widget).
 
 
 == Installation ==
 
+Either use the WordPress Plugin Installer (Dashboard > Plugins > Add New, then search for "custom taxonomies menu widget"), or manually as follows:
 
-**New Installation**
---------------------------------------------
-Either use the automatic installer via the Dashboard>Plugins page or manually install as follows:
 1. Download the latest version of the plugin to your computer.
 2. Extract and upload the folder *custom-taxonomies-menu-widget* to your */wp-content/plugins/* directory. Please ensure that you do not rename any folder or filenames in the process.
-3. Activate the plugin in your Dashboard via the "Plugins" menu item.
-4. Go to the plugin's Settings page, and configure your settings.
+3. Activate the plugin in your Dashboard via the "Plugins" menu.
+4. Go to the Dashboard > Appearance > Widgets page, where you can now see the Custom Taxonomies Menu Widget in the available widgets, ready for use in any of your theme's widget areas.
 
 Note for WordPress Multisite users:
 
 * Install the plugin in your */plugins/* directory (do not install in the */mu-plugins/* directory).
-* In order for this plugin to be visible to Site Admins, the plugin has to be activated for each blog by the Network Admin. Each Site Admin can then configure the plugin's Settings page in their Admin Settings.
+* In order for this plugin to be visible to Site Admins, the plugin has to be activated for each blog by the Network Admin.
 
 **Upgrading from a previous version**
 -------------------------------------
-Either use the automatic upgrader via the Dashboard>Plugins page or manually upgrade as follows:
-1. Download the latest version of the plugin to your computer.
-2. Extract and upload the folder *custom-taxonomies-menu-widget* to your */wp-content/plugins/* directory, overwriting the existing *custom-taxonomies-menu-widget* folder and its contents. Please ensure that you do not rename any folder or filenames in the process.
-3. Go to the plugin's Settings page, and configure any new settings introduced with the upgrade.
 
-
-**Instructions for use**
-------------------------
-
-**Using the plugin** 
-
-Go to your Dashboard > Appearance > Widgets page and drag the Custom Taxonomies Menu widget to your sidebar. Open the widget and configure the options.
-
-
-
-== Configuration and set-up ==
-
-Comprehensive information on installing, configuring and using the plugin can be found [here](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/)
-
-* [Configuration Guide](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/)
-* [FAQ](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/faq/)
+You can use the Wordpress Automatic Plugin upgrade link in the Dashboard Plugins menu to automatically upgrade the plugin.
 
 
 
 == Frequently Asked Questions ==
 
-None at present.
+**Where can I get Support?**
+---------------------------
+Further information about setting up and using the plugin can be found in the plugin's [Configuration Guide](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/configuration/).
+
+If, having read the information linked to above, you cannot solve your issue, or if you find a bug, you can post a message on the plugin's [Support Forum](http://wordpress.org/support/plugin/custom-taxonomies-menu-widget).
+
+Support is provided in my free time but every effort will be made to respond to support queries as quickly as possible.
 
 
-**Download**
-------------
+**Can I Donate?**
+-----------------
+Yes, of course you can! You can find a link [here](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/). Thanks!. Thanks!
 
-Latest stable version is available from http://wordpress.org/extend/plugins/custom-taxonomies-menu-widget/ 
 
+**License and Disclaimer**
+--------------------------
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 2 as published by
+the Free Software Foundation.
 
-**Support**
------------
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-This plugin is provided free of charge without warranty.  In the event you experience problems you should visit these resources:
-
-* [Custom Taxonomies Menu Widget home page](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/)
-* [Configuration Guide](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/)
-* [FAQ](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/faq/)
-
-If, having referred to the above resources, you still need assistance, you can post a question on the [plugin's WordPress.org Support Forum](http://wordpress.org/support/plugin/custom-taxonomies-menu-widget).  Support is provided in my free time but every effort will be made to respond to support queries as quickly as possible.
+The license for this software can be found here: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
 Thanks for downloading the plugin.  Enjoy!
 
-If you have found the plugin useful, please consider a Donation to help me continue to invest the time and effort in maintaining and improving this plugin. Thank you!
 
 
-**Troubleshooting**
--------------------
+== Using the plugin ==
 
-In the event of problems with the plugin, refer to the Resources listed above.
+Go to your Dashboard > Appearance > Widgets page and drag the Custom Taxonomies Menu widget to your sidebar. Open the widget control panel and configure the options.
+
+
 
 
 
@@ -123,7 +104,7 @@ In the event of problems with the plugin, refer to the Resources listed above.
 == Changelog ==
 
 = 1.2.2 =
-* Readme.txt updated 23 March 2013
+* Readme.txt updated 1 April 2013
 * Released 1 January 2012
 * Bug fix: Fixed PHP data type error
 
