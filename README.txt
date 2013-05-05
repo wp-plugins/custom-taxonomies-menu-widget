@@ -1,6 +1,6 @@
 === Custom Taxonomies Menu Widget ===
 
-Version: 1.2.2
+Version: 1.3
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
@@ -8,12 +8,14 @@ Donate link: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Tags: custom taxonomies,taxonomy, menu, widget
 Requires at least: 3.2
 Tested up to: 3.5.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Stable tag: 1.2.2
 
 Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
 
 
-== Description==
+== Description ==
 
 Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via checkboxes to select which custom taxonomies and terms are displayed in the menu.
 
@@ -26,7 +28,7 @@ Creates a simple menu of your custom taxonomies and their associated terms, idea
 * Choose whether to display the taxonomy name as a title
 * Choose whether to display the list of terms as a hierarchy
 * Choose whether to hide terms with no posts
-* NEW - New terms are now automatically added to the menu
+* NEW - User options to control how to treat display of new terms added to a taxonomy
 
 
 **Further information**
@@ -61,8 +63,8 @@ You can use the Wordpress Automatic Plugin upgrade link in the Dashboard Plugins
 
 == Frequently Asked Questions ==
 
-**Where can I get Support?**
----------------------------
+= Where can I get Support? =
+
 Further information about setting up and using the plugin can be found in the plugin's [Configuration Guide](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/configuration/).
 
 If, having read the information linked to above, you cannot solve your issue, or if you find a bug, you can post a message on the plugin's [Support Forum](http://wordpress.org/support/plugin/custom-taxonomies-menu-widget).
@@ -70,13 +72,89 @@ If, having read the information linked to above, you cannot solve your issue, or
 Support is provided in my free time but every effort will be made to respond to support queries as quickly as possible.
 
 
-**Can I Donate?**
------------------
-Yes, of course you can! You can find a link [here](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/). Thanks!. Thanks!
+= Can I Donate? =
+
+Yes, of course you can! You can find a link [here](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/). Thanks!
 
 
-**License and Disclaimer**
---------------------------
+= Terms Handling options =
+
+New widget control panel option in version 1.3.
+
+This option determines how the plugin should treat new terms added to a taxonomy since the last time the widget options were Saved by the user. Best option for most users will be **Auto top level / smart child**. To replicate pre-1.3 behaviour, select **Auto**.
+
+**Auto**
+
+Any new Top Level or Child term created since last Save is:
+
+* automatically included in Menu
+* automatically shown as checked in the widget control panel
+
+
+**Manual**
+
+Any new Top Level or Child term created since last Save is:
+
+* not included in Menu
+* not shown as checked in the widget control panel
+
+Note: User always has to open widget control panel to manually add terms to the Menu
+
+
+**Auto top level / smart child**
+
+Any new Top Level term created since last Save is:
+
+* automatically included in Menu
+* automatically shown as checked in the widget control panel
+
+Any new Child term created since last Save is:
+
+* only included in Menu if its parent is already included
+* only shown as checked in widget control panel if its parent is checked
+
+This means that a new child of a new top level term will be checked and included in Menu.
+
+On Save, any checked child terms, whose parents have been unchecked in the widget control panel, will be automatically unchecked. In other words, to check a child term, you must also check its parent.
+
+
+**Manual top level / smart child**
+
+Any new Top Level term created since last Save is:
+
+* not included in Menu
+* not shown as checked in the widget control panel
+
+Any new Child term created since last Save is:
+
+* only included in Menu if its parent is already included
+* only shown as checked in the widget control panel if its parent is checked
+
+This means that a new child of a new top level term will not be checked and won't be included in Menu.
+
+On Save, any checked child terms whose parents have been unchecked in control panel will be automatically unchecked. In other words, to check a child term, you must also check its parent.
+
+To replicate pre-1.3 behaviour, select **Auto**. However, note that many users may find the new **Auto top level / smart child** option to be the better option.
+
+Further information and examples can be found in the plugin's [Configuration Guide](http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/configuration/).
+
+
+= Why does the widget panel re-check all terms that I've just unchecked? =
+
+If you uncheck all terms in a taxonomy (in the widget's control panel), all terms will be automatically checked on Save. This is intentional behaviour.
+
+If you want to hide a taxonomy's terms, uncheck the taxonomy itself.
+
+
+= How to include builtin taxonomies =
+
+The Custom Taxonomies Menu Widget is designed to display "custom" taxonomies - hence the title. However, some users have been nagging me to include builtin taxonomies, ie Category and Tag.
+
+In response to these nags, version 1.3 now provides the 'sgr_ctmw_taxonomies' filter which can be used to filter the $args sent to the get_taxonomies() function used by the plugin. The filter passes an array called $args.
+
+
+= License and Disclaimer =
+
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 2 as published by
 the Free Software Foundation.
 
@@ -94,14 +172,28 @@ Go to your Dashboard > Appearance > Widgets page and drag the Custom Taxonomies 
 
 
 
+== Upgrade Notice ==
+
+= 1.3 =
+
+Version 1.3 introduces new options for determining how the plugin should treat new terms added to a taxonomy since the last time the widget options were Saved by the user. These "Terms Handling" options are set to "Auto" by default, which replicates the way prior versions of the plugin included new terms.
+
 
 
 == Screenshots ==
-1. Custom Taxonomies Menu Widget
+1. Custom Taxonomies Menu Widget control panel
 
 
 
 == Changelog ==
+
+= 1.3 =
+* Released
+* Enhance: Added new control panel options for Terms Handling, which determine how the plugin should treat new terms added to a taxonomy since the last time the widget options were Saved by the user
+* Enhance: Major re-write to integrate options and to treat new terms added to a taxonomy since last Save
+* Enhance: SGR_CTMW_DOMAIN deprecated
+* Bug fix: Changed textdomain to string 'sgr-ctmw', no longer Constant
+* Bug fix: Improved sanitisation/validation when widget options are saved
 
 = 1.2.2 =
 * Readme.txt updated 1 April 2013
