@@ -178,6 +178,8 @@ Go to your Dashboard > Appearance > Widgets page and drag the Custom Taxonomies 
 
 Version 1.3 introduces new options for determining how the plugin should treat new terms added to a taxonomy since the last time the widget options were Saved by the user. These "Terms Handling" options are set to "Auto" by default, which replicates the way prior versions of the plugin included new terms.
 
+Added 'sgr_ctmw_taxonomies' filter which can be used to filter the $args sent to the get_taxonomies() function used by the plugin. The filter passes an array called $args. This allows you to add in built-in taxonomies if you wish to to do so.
+
 
 
 == Screenshots ==
