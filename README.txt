@@ -10,7 +10,7 @@ Requires at least: 3.2
 Tested up to: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.2.2
+Stable tag: 1.3
 
 Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
 
@@ -190,7 +190,7 @@ Added 'sgr_ctmw_taxonomies' filter which can be used to filter the $args sent to
 == Changelog ==
 
 = 1.3 =
-* Released
+* Released 6 May 2013
 * Enhance: Added new control panel options for Terms Handling, which determine how the plugin should treat new terms added to a taxonomy since the last time the widget options were Saved by the user
 * Enhance: Major re-write to integrate options and to treat new terms added to a taxonomy since last Save
 * Enhance: SGR_CTMW_DOMAIN deprecated
