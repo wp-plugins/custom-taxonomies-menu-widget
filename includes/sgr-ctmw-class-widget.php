@@ -590,6 +590,8 @@ class SGR_Widget_Custom_Taxonomies_Menu extends WP_Widget {
 					<input type="radio" name="<?php echo $this->get_field_name( 'terms_handling' ); ?>" id="<?php echo $this->get_field_id( 'terms_handling' ); ?>-ntl-child" value="ntl-child" <?php checked('ntl-child', $instance['terms_handling'] ); ?> />
 					<label for="<?php echo $this->get_field_id( 'terms_handling' ); ?>-ntl-child"><?php _e('Manual top level / smart child', 'sgr-ctmw' ); ?></label>
 				</p>
+				
+				<p><?php printf( '<a href="%s" target="_blank">%s</a>', SGR_CTMW_HOME . 'faq/', __('Learn more') ); ?></p>
 			
 			</div><!-- end .custom-taxonomies-menu-column-inner -->
 		
