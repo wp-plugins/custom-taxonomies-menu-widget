@@ -3,6 +3,7 @@
 Version: 1.3
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
+Contributors: studiograsshopper
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Donate link: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Tags: custom taxonomies,taxonomy, menu, widget
