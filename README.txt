@@ -1,14 +1,14 @@
 === Custom Taxonomies Menu Widget ===
 
-Version: 1.3
+Version: 1.3.1
 Author: Ade Walker
 Author page: http://www.studiograsshopper.ch
 Contributors: studiograsshopper
 Plugin page: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Donate link: http://www.studiograsshopper.ch/custom-taxonomies-menu-widget/
 Tags: custom taxonomies,taxonomy, menu, widget
-Requires at least: 3.2
-Tested up to: 3.5.1
+Requires at least: 3.8
+Tested up to: 3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Stable tag: 1.3
@@ -189,6 +189,10 @@ Added 'sgr_ctmw_taxonomies' filter which can be used to filter the $args sent to
 
 
 == Changelog ==
+
+= 1.3.1 =
+* Released 16 December 2013
+* Bug fix: Tweaked admin CSS to fix new-look WP 3.8 Dashboard styles
 
 = 1.3 =
 * Released 6 May 2013
