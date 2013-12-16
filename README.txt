@@ -11,7 +11,7 @@ Requires at least: 3.8
 Tested up to: 3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 Creates a simple menu of your custom taxonomies and their associated terms, ideal for sidebars. Highly customisable via widget control panel.
 
@@ -192,6 +192,7 @@ Added 'sgr_ctmw_taxonomies' filter which can be used to filter the $args sent to
 
 = 1.3.1 =
 * Released 16 December 2013
+* Enhance: Wp 3.8 minimum version required
 * Bug fix: Tweaked admin CSS to fix new-look WP 3.8 Dashboard styles
 
 = 1.3 =
